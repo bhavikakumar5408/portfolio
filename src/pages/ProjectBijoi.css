@@ -1,0 +1,64 @@
+/* Bijoi / Rangat-e-Ajrakh: same editorial system as AFREEN, recoloured to the catalogue's crimson, brown and gold */
+.afr.bjo {
+  --paper: #f8ece1;
+  --paper-2: #efdccb;
+  --ink: #2b140e;
+  --ink-2: #5a3a2e;
+  --rule: #d9bfa8;
+  --crimson: #8c1b21;
+  --gold: #a5701f;
+}
+body[data-theme='dark'] .afr.bjo {
+  --paper: #1b0e0a;
+  --paper-2: #26140f;
+  --ink: #f6e6d4;
+  --ink-2: #cdb7a4;
+  --rule: #402a20;
+  --crimson: #e2636b;
+  --gold: #dcae66;
+}
+.bjo .afr-cover { transform: rotate(1.4deg); }
+.bj-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.bj-shoots { max-width: 1240px; margin: 48px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 28px 20px; align-items: start; }
+.bj-shoot { margin: 0; grid-column: span 4; }
+.bj-shoot img { width: 100%; display: block; aspect-ratio: 1000 / 1414; object-fit: cover; border-radius: 2px; background: var(--paper-2); }
+.bj-shoot figcaption { margin-top: 10px; display: flex; justify-content: space-between; gap: 12px; }
+.bj-shoot b { font-size: 14px; font-weight: 600; color: var(--ink); letter-spacing: -0.2px; }
+.bj-shoot span { font-size: 13px; color: var(--ink-2); }
+.bj-shoot.i0 { grid-column: 1 / span 5; }
+.bj-shoot.i1 { grid-column: 7 / span 4; margin-top: 80px; }
+.bj-shoot.i2 { grid-column: 2 / span 4; }
+.bj-shoot.i3 { grid-column: 7 / span 5; margin-top: 50px; }
+.bj-shoot.i4 { grid-column: 1 / span 4; margin-top: 30px; }
+.bj-shoot.i5 { grid-column: 6 / span 4; }
+.bj-shoot.i6 { grid-column: 10 / span 3; margin-top: 90px; }
+.bj-shoot.i7 { grid-column: 2 / span 5; }
+.bj-shoot.i8 { grid-column: 8 / span 4; margin-top: 60px; }
+
+.bj-cover { margin-top: 40px; display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 5fr); gap: 56px; align-items: center; }
+.bj-cover img { width: 100%; display: block; border-radius: 2px; box-shadow: 0 30px 60px -24px rgba(43, 20, 14, 0.55); aspect-ratio: 1300 / 1839; }
+.bj-spreads { margin-top: 72px; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.bj-spreads .afr-spread:nth-child(1) { grid-column: 1 / span 3; }
+.bj-spreads .afr-spread:nth-child(2) { grid-column: 4 / span 3; margin-top: 60px; }
+.bj-spreads .afr-spread:nth-child(3) { grid-column: 1 / span 3; margin-top: 0; }
+.bj-spreads .afr-spread:nth-child(4) { grid-column: 4 / span 3; margin-top: 60px; }
+.bj-web { margin: 40px 0 0; }
+.bj-web img { width: 100%; display: block; border-radius: 6px; border: 1px solid var(--rule); box-shadow: 0 24px 50px -24px rgba(43, 20, 14, 0.45); }
+.bj-web figcaption { margin-top: 14px; font-size: 14px; }
+.bj-web a { color: var(--ink); border-bottom: 1.5px solid var(--accent); padding-bottom: 2px; }
+.bj-web a:hover { color: var(--accent); }
+
+@media (max-width: 860px) {
+  .bj-steps { grid-template-columns: 1fr 1fr; }
+  .bj-cover { grid-template-columns: 1fr; gap: 28px; }
+  .bj-cover img { max-width: 320px; margin: 0 auto; }
+  .bj-shoots { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; padding: 0 16px; }
+  .bj-shoot[class] { grid-column: auto; margin-top: 0; }
+  .bj-shoot:nth-child(even) { margin-top: 36px; }
+  .bj-spreads { grid-template-columns: 1fr; }
+  .bj-spreads .afr-spread[class] { grid-column: auto; margin-top: 0; }
+}
+@media (max-width: 560px) {
+  .bj-steps { grid-template-columns: 1fr; }
+}

@@ -3,4 +3,5 @@ export const projects = [
   { slug: 'a-bar-that-argues-back', title: 'A Bar That Argues Back.', blurb: 'Nobody should need a manual to pour a drink.', img: '/img/bar.png', year: '2026' },
   { slug: 'i-puthinge-on-trial', title: 'I Put Hinge on Trial', blurb: 'The jury is WCAG 2.2.', img: '/img/hinge.png', year: '2025' },
   { slug: 'afreen-fashion-magazine', title: 'AFREEN Fashion Magazine', blurb: 'Indian crafts and handloom, shot like fashion.', img: '/afreen/p01.webp', year: '2023' },
+  { slug: 'rangat-e-ajrakh-bijoi-catalogue', title: 'Rangat-e-Ajrakh', blurb: 'A handloom catalogue whose photos now sell on the brand’s website.', img: '/bijoi/p14.webp', year: '2024' },
 ]
