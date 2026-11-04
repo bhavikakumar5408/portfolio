@@ -20,7 +20,7 @@ export default function Projects() {
         <div className="projects-head">
           <div className="projects-title">
             <h2 className="t-h2">Latest Projects</h2>
-            <p className="t-md"><Link to="/work">View all</Link></p>
+            <p className="t-md"><Link to="/work" className="nav-link">View all</Link></p>
           </div>
           <div className="rule" />
         </div>

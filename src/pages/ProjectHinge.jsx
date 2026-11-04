@@ -1,8 +1,10 @@
 import ProjectHeader from '../components/ProjectHeader.jsx'
+import ScrollProgress from '../components/fx/ScrollProgress.jsx'
 
 export default function ProjectHinge() {
   return (
     <section className="cs">
+      <ScrollProgress />
       <div className="cs-inner">
         <div className="cs-top">
           <ProjectHeader title="I Put Hinge on Trial" slug="i-puthinge-on-trial" year="2025" />

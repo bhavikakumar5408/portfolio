@@ -1,9 +1,11 @@
 import ProjectHeader from '../components/ProjectHeader.jsx'
+import ScrollProgress from '../components/fx/ScrollProgress.jsx'
 import html from '../content/bar.html?raw'
 
 export default function ProjectBar() {
   return (
     <section className="cs">
+      <ScrollProgress />
       <div className="cs-inner">
         <div className="cs-top">
           <ProjectHeader title="A Bar That Argues Back." slug="a-bar-that-argues-back" year="2026" />

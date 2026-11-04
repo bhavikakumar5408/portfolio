@@ -1,4 +1,19 @@
+import { useEffect } from 'react'
+import { noteForKey, pluck, riff } from '../lib/sound.js'
+
 export default function About() {
+  // Guitar easter egg: press A–L anywhere on this page.
+  useEffect(() => {
+    const down = (e) => {
+      if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return
+      if (/input|textarea/i.test(e.target.tagName)) return
+      const f = noteForKey(e.key)
+      if (f) pluck(f)
+    }
+    window.addEventListener('keydown', down)
+    return () => window.removeEventListener('keydown', down)
+  }, [])
+
   return (
     <section className="hero">
       <div className="hero-inner">
@@ -16,9 +31,12 @@ export default function About() {
             what it looks like. I don't really do "good enough." If I'm in something, I want to be good at it, properly.
           </p>
           <p>
-            Outside work, that shows up in odd places. I play electric guitar. I roller skate.(Im a national level skater,
-            represented Uttar Pradesh). I also read a lot, more than most people I know. None of it is related to design, and I like
-            that it isn't.
+            Outside work, that shows up in odd places. I play{' '}
+            <button type="button" className="guitar" onClick={riff} title="Psst — try pressing A to L on your keyboard">
+              electric guitar.
+            </button>{' '}
+            I roller skate.(Im a national level skater, represented Uttar Pradesh). I also read a lot, more than most people I know.
+            None of it is related to design, and I like that it isn't.
           </p>
         </div>
         <div className="about-photo"><img src="/media/YxwYgg33Zzb4A3qnJE1tZ4KHGU.jpeg" alt="" /></div>

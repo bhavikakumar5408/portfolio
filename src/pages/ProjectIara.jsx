@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom'
 import ProjectHeader from '../components/ProjectHeader.jsx'
+import ScrollProgress from '../components/fx/ScrollProgress.jsx'
 import VideoCarousel from '../components/iara/VideoCarousel.jsx'
 import Marquee from '../components/iara/Marquee.jsx'
 import Flipbook from '../components/iara/Flipbook.jsx'
 import PhoneStack from '../components/iara/PhoneStack.jsx'
+import DMToasts from '../components/iara/DMToasts.jsx'
+// import IsThisReal from '../components/iara/IsThisReal.jsx' // TODO: re-enable once real/AI assets are finalised
 
 const m = (f) => `/media/${f}`
 
@@ -39,6 +42,8 @@ const chats = [
 export default function ProjectIara() {
   return (
     <section className="cs cs-iara">
+      <ScrollProgress />
+      <DMToasts />
       <div className="cs-inner">
         <div className="cs-top">
           <ProjectHeader title="My Coworker Isn't Real" slug="my-coworker-isn-t-real" year="2026" />
@@ -91,6 +96,8 @@ export default function ProjectIara() {
             <p className="t-lg ps-tap">Tap👆🏻</p>
             <PhoneStack images={chats} />
           </div>
+
+          {/* <IsThisReal />  — enable once /src/data/isThisReal.js has the real/AI assets */}
 
           <div className="iara-sec" style={{ marginTop: 158 }}>
             <h2 className="t-h2">Why it’s worth it</h2>

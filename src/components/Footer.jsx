@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import Skater from './fx/Skater.jsx'
 
 const RESUME = 'https://drive.google.com/file/d/1t82_QnKbutwLJJ1-BvjBNbfax36JYqnX/view?usp=sharing'
 const cls = ({ isActive }) => `nav-link${isActive ? ' active' : ''}`
@@ -6,7 +7,9 @@ const cls = ({ isActive }) => `nav-link${isActive ? ' active' : ''}`
 export default function Footer() {
   return (
     <footer className="footer">
-      <div className="footer-line" />
+      <div className="footer-line">
+        <Skater />
+      </div>
       <div className="footer-row">
         <p className="t-md">© Bhavika Kumar | 2026</p>
         <div className="footer-links t-md">
