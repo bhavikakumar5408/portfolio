@@ -74,6 +74,19 @@ export default function MagazineFlipbook({ pages, label = 'Magazine' }) {
     })
     pf.loadFromImages(pages)
     const render = pf.getRender()
+    // StPageFlip draws 1:1 CSS pixels, which looks soft on retina screens. Back the canvas with
+    // device pixels and scale the context so all of its geometry keeps working in CSS pixels.
+    const ui = pf.getUI()
+    ui.resizeCanvas = function () {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const box = this.canvas.parentElement.getBoundingClientRect()
+      const w = Math.round(box.width)
+      const h = Math.round(box.height)
+      this.canvas.width = Math.round(w * dpr)
+      this.canvas.height = Math.round(h * dpr)
+      this.canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+    ui.resizeCanvas()
     render.clear = function () {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     }

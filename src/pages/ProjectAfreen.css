@@ -96,6 +96,8 @@ body[data-theme='dark'] .afr {
 .mag-stage.at-end { transform: translateX(25%); }
 .mag-host { width: 100%; background: transparent; }
 .mag-host .mag-inner, .mag-host .mag-el { width: 100%; height: 100%; }
+.mag-host .stf__wrapper { position: relative; }
+.mag-host .stf__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .mag-host .stf__parent, .mag-host .stf__wrapper, .mag-host .stf__canvas { background: transparent; }
 .mag-bar { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 28px; }
 .mag-btn { width: 40px; height: 40px; flex: none; border-radius: 999px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .2s, color .2s, opacity .2s; }
