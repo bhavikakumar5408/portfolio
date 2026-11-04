@@ -1,12 +1,13 @@
 import Projects from '../components/Projects.jsx'
+import SlotMachine from '../components/SlotMachine.jsx'
 
 export default function Home() {
   return (
     <>
-      <section className="hero">
+      <SlotMachine />
+      <section className="hero hero-intro" id="intro">
         <div className="hero-inner">
           <div className="hero-head">
-            <h1 className="t-h1">Bhavika Kumar</h1>
             <div className="hero-meta t-lg">
               <strong>AI Generalist</strong>
               <strong>📍 Bengluru</strong>

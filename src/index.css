@@ -178,6 +178,8 @@ main {
   gap: 60px;
 }
 
+.hero-intro { padding-top: 72px; }
+
 .hero-head {
   display: flex;
   flex-direction: column;

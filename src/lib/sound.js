@@ -81,3 +81,28 @@ export function riff() {
   const seq = [196, 246.94, 293.66, 392, 293.66, 246.94, 329.63, 196]
   seq.forEach((f, i) => setTimeout(() => pluck(f, { dur: 1.1, vol: 0.28 }), i * 170))
 }
+
+// Paper page-turn: a short band-passed noise whoosh with a soft thud at the end.
+// Callers decide whether to play it (the magazine flipbook has its own opt-in toggle).
+export function pageFlipSound() {
+  const c = get()
+  const dur = 0.42
+  const len = Math.floor(c.sampleRate * dur)
+  const buf = c.createBuffer(1, len, c.sampleRate)
+  const d = buf.getChannelData(0)
+  for (let i = 0; i < len; i++) {
+    const t = i / len
+    d[i] = (Math.random() * 2 - 1) * Math.sin(Math.PI * t) ** 1.6
+  }
+  const src = c.createBufferSource()
+  src.buffer = buf
+  const bp = c.createBiquadFilter()
+  bp.type = 'bandpass'
+  bp.Q.value = 0.9
+  bp.frequency.setValueAtTime(1800, c.currentTime)
+  bp.frequency.exponentialRampToValueAtTime(5200, c.currentTime + dur)
+  const g = c.createGain()
+  g.gain.value = 0.22
+  src.connect(bp).connect(g).connect(c.destination)
+  src.start()
+}
