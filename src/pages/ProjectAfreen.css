@@ -1,12 +1,12 @@
 /* AFREEN case study: warm editorial paper, adapts to the site's dark theme */
 .afr {
-  --paper: #f3ebdd;
-  --paper-2: #eadfcb;
+  --paper: #fbf5ea;
+  --paper-2: #f1e7d6;
   --ink: #1d1612;
-  --ink-2: #4a3d34;
-  --rule: #cdbfa8;
-  --crimson: #8f1d2c;
-  --gold: #b07a1c;
+  --ink-2: #4a3d33;
+  --rule: #dccfbb;
+  --crimson: #b8323f;
+  --gold: #a9741a;
   --ph: #1d1612; /* shadow */
   background: var(--paper);
   color: var(--ink-2);
@@ -14,12 +14,12 @@
   overflow-x: clip;
 }
 body[data-theme='dark'] .afr {
-  --paper: #17110e;
-  --paper-2: #211914;
-  --ink: #f3e8d6;
-  --ink-2: #c9bba7;
-  --rule: #3a2e26;
-  --crimson: #e0647a;
+  --paper: #14100d;
+  --paper-2: #1d1712;
+  --ink: #f4e9dc;
+  --ink-2: #cdbfae;
+  --rule: #2e2620;
+  --crimson: #e04b5a;
   --gold: #e3b45a;
 }
 .afr .t-h1, .afr .t-md, .afr .ph-date, .afr .ph-crumb .nav-link { color: var(--ink); }
@@ -154,3 +154,8 @@ body[data-theme='dark'] .afr {
   .afr-dek { font-size: 22px; }
   .mag-hint { font-size: 13px; gap: 6px; }
 }
+
+/* flipbook is the first thing on the page */
+.afr-issue.afr-first { margin-top: 36px; padding: 56px 0 72px; }
+.afr-hero.afr-hero-flat { grid-template-columns: minmax(0, 1fr); margin-top: 72px; }
+.afr-hero-flat .afr-dek { max-width: 24em; }

@@ -16,8 +16,8 @@ const JACKPOT = [ SPARK, SPARK, SPARK ]
 const FILLER = [ 'AI', 'Design', 'Taste', 'Craft', 'Prompt', 'Agents', 'Pixels', 'Story', 'Systems', 'Curator', 'Bhavika', SPARK, SPARK ]
 
 // Usable text width of each reel, in machine-width units (cqw), used to size words so they fit.
-const REEL_W = [ 21.7, 27.7, 21.7 ]
-const MOBILE_REEL_W = 76
+const REEL_W = [ 22.5, 28.5, 22.5 ]
+const MOBILE_REEL_W = 72
 const JACKPOT_EVERY = 3
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
@@ -31,8 +31,8 @@ function Sparkle() {
     <svg className="sm-spark" viewBox="0 0 100 100" aria-hidden="true">
       <defs>
         <linearGradient id="smSparkG" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#ff9a3c" />
-          <stop offset="1" stopColor="#d9480f" />
+          <stop offset="0" stopColor="#ffb04a" />
+          <stop offset="1" stopColor="#e5680a" />
         </linearGradient>
       </defs>
       <path d="M50 4 C54 32 68 46 96 50 C68 54 54 68 50 96 C46 68 32 54 4 50 C32 46 46 32 50 4Z" fill="url(#smSparkG)" />
@@ -43,7 +43,7 @@ function Sparkle() {
 function Cell({ word, index }) {
   if (word === SPARK) return <div className="sm-cell"><Sparkle /></div>
   const style = {
-    '--fs': `${wordSize(word, REEL_W[index], 5.6)}cqw`,
+    '--fs': `${wordSize(word, REEL_W[index], 6.4)}cqw`,
     '--fsm': `${wordSize(word, MOBILE_REEL_W, 8.4)}cqw`,
   }
   return (
@@ -126,7 +126,7 @@ function Confetti({ burst }) {
         rot: Math.random() * 900 - 450,
         delay: Math.random() * 0.15,
         dur: 1.4 + Math.random() * 1.2,
-        color: [ '#ff6b00', '#ffb347', '#fff1d6', '#ff3d00', '#ffd166' ][i % 5],
+        color: [ '#ff8a1f', '#e3b45a', '#f4e9dc', '#e04b5a', '#ffd166' ][i % 5],
         w: 0.8 + Math.random() * 0.9,
       })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,6 +154,12 @@ function Confetti({ burst }) {
   )
 }
 
+// Marquee-sign bulbs laid out on an ellipse behind the machine (positions in cqw of the machine width)
+const RING = Array.from({ length: 34 }, (_, i) => {
+  const a = (i / 34) * Math.PI * 2
+  return { x: +(50 + 98 * Math.cos(a)).toFixed(2), y: +(47 + 55 * Math.sin(a)).toFixed(2) }
+})
+
 function usePrefersReducedMotion() {
   const [reduce, setReduce] = useState(() => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false)
   useEffect(() => {
@@ -170,23 +176,17 @@ export default function SlotMachine() {
   const reels = [ useRef(null), useRef(null), useRef(null) ]
   const tiltEl = useRef(null)
   const stage = useRef(null)
-  const leverBox = useRef(null)
 
   const [phase, setPhase] = useState(-1)
   const [busy, setBusy] = useState(false)
-  const [autoDone, setAutoDone] = useState(false)
-  const [touched, setTouched] = useState(false)
   const [burst, setBurst] = useState(0)
   const [jackpot, setJackpot] = useState(false)
-  const [pull, setPull] = useState(0)
-  const [dragging, setDragging] = useState(false)
   const [pressed, setPressed] = useState(false)
 
   const busyRef = useRef(false)
   const phaseRef = useRef(-1)
   const manualRef = useRef(false)
   const pullsRef = useRef(0)
-  const drag = useRef(null)
 
   const initial = useMemo(() => JACKPOT, [])
 
@@ -210,16 +210,15 @@ export default function SlotMachine() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const nudgeLever = useCallback(() => {
-    setPull(1)
+  const press = useCallback(() => {
+    setPressed(true)
     sfx.lever()
-    setTimeout(() => setPull(0), 220)
+    setTimeout(() => setPressed(false), 200)
   }, [])
 
   const manualSpin = useCallback(() => {
     if (busyRef.current) return
     manualRef.current = true
-    setTouched(true)
     pullsRef.current += 1
     if (pullsRef.current % JACKPOT_EVERY === 0) {
       spin(JACKPOT, phaseRef.current, true)
@@ -231,9 +230,9 @@ export default function SlotMachine() {
 
   const trigger = useCallback(() => {
     if (busyRef.current) return
-    nudgeLever()
+    press()
     manualSpin()
-  }, [nudgeLever, manualSpin])
+  }, [press, manualSpin])
 
   // intro: spin to name, then each role, then hand control to the visitor
   useEffect(() => {
@@ -243,21 +242,20 @@ export default function SlotMachine() {
     ;(async () => {
       await sleep(900)
       if (cancelled || manualRef.current) return
-      nudgeLever()
+      press()
       await spin(PHASES[0], 0, false)
       for (const next of [ 1, 2 ]) {
         await sleep(2600)
         if (cancelled || manualRef.current) return
-        nudgeLever()
+        press()
         await spin(PHASES[next], next, false)
       }
-      if (!cancelled) setAutoDone(true)
     })()
     return () => {
       cancelled = true
       timers.forEach(clearTimeout)
     }
-  }, [spin, nudgeLever])
+  }, [spin, press])
 
   // mouse-follow tilt (mouse only, off for reduced motion)
   useEffect(() => {
@@ -272,8 +270,8 @@ export default function SlotMachine() {
         const r = host.getBoundingClientRect()
         const nx = ((e.clientX - r.left) / r.width - 0.5) * 2
         const ny = ((e.clientY - r.top) / r.height - 0.5) * 2
-        el.style.setProperty('--rx', `${(-ny * 4).toFixed(2)}deg`)
-        el.style.setProperty('--ry', `${(nx * 6).toFixed(2)}deg`)
+        el.style.setProperty('--rx', `${(-ny * 5).toFixed(2)}deg`)
+        el.style.setProperty('--ry', `${(nx * 8).toFixed(2)}deg`)
       })
     }
     const leave = () => {
@@ -289,52 +287,9 @@ export default function SlotMachine() {
     }
   }, [reduce])
 
-  // lever drag
-  const onLeverDown = (e) => {
-    if (busyRef.current) return
-    e.currentTarget.setPointerCapture(e.pointerId)
-    drag.current = { y: e.clientY, moved: false }
-    setDragging(true)
-  }
-  const onLeverMove = (e) => {
-    if (!drag.current) return
-    const travel = (leverBox.current?.offsetWidth || 90) * 1.35
-    const dy = e.clientY - drag.current.y
-    if (dy > 6) drag.current.moved = true
-    setPull(Math.max(0, Math.min(1, dy / travel)))
-  }
-  const onLeverUp = () => {
-    if (!drag.current) return
-    const { moved } = drag.current
-    drag.current = null
-    setDragging(false)
-    if (!moved) {
-      trigger()
-      return
-    }
-    const fired = pull > 0.55
-    setPull(0)
-    if (fired && !busyRef.current) {
-      sfx.lever()
-      manualSpin()
-    }
-  }
-  const onLeverKey = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault()
-      trigger()
-    }
-  }
-
-  const onKnob = () => {
-    setPressed(true)
-    setTimeout(() => setPressed(false), 160)
-    trigger()
-  }
-
   const scrollDown = () => document.getElementById('intro')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' })
 
-  const label = jackpot ? 'Jackpot!' : phase >= 0 && phase < LABELS.length ? LABELS[phase] : 'Pull to spin'
+  const label = jackpot ? 'Jackpot!' : phase >= 0 && phase < LABELS.length ? LABELS[phase] : 'Spin me'
   const live = phase >= 0 && phase < PHASES.length ? `${LABELS[phase]} ${PHASES[phase].filter((w) => w !== SPARK).join(' ')}` : ''
 
   return (
@@ -342,62 +297,52 @@ export default function SlotMachine() {
       <h1 className="sr-only">Bhavika Kumar, AI Generalist and AI Design Curator</h1>
       <p className="sr-only" aria-live="polite">{live}</p>
 
+      <i className="sm-rays" aria-hidden="true" />
+
       <div className="sm">
+        <div className="sm-ring" aria-hidden="true">
+          {RING.map((b, i) => <i key={i} style={{ '--x': b.x, '--y': b.y, '--i': i }} />)}
+        </div>
         <div className="sm-tilt" ref={tiltEl}>
-          <div
-            className={`sm-lever${dragging ? ' is-dragging' : ''}`}
-            ref={leverBox}
-            style={{ '--pull': pull }}
-            role="button"
-            tabIndex={0}
-            aria-label="Pull the lever to spin"
-            onPointerDown={onLeverDown}
-            onPointerMove={onLeverMove}
-            onPointerUp={onLeverUp}
-            onPointerCancel={onLeverUp}
-            onKeyDown={onLeverKey}
-          >
-            <span className="sm-stem"><span className="sm-ball" /></span>
-            <span className="sm-plate" />
-            {autoDone && !touched && <span className="sm-hint" aria-hidden="true">Pull me ↓</span>}
-          </div>
-
           <div className="sm-body">
-            <i className="sm-ear left" />
-            <i className="sm-ear right" />
+            <span className="sm-gloss" aria-hidden="true" />
+            <div className="sm-bulbs" aria-hidden="true">
+              {Array.from({ length: 11 }, (_, i) => <i key={i} style={{ '--i': i }} />)}
+            </div>
 
-            <div className="sm-top">
-              <span className="sm-vents" />
-              <div className="sm-marquee">
-                <i className="sm-dot" />
-                <span key={label} className="sm-marquee-text">{label}</span>
-              </div>
-              <span className="sm-vents" />
+            <div className="sm-marquee">
+              <span key={label} className="sm-marquee-text">{label}</span>
             </div>
 
             <div className="sm-window" onClick={trigger}>
               {reels.map((r, i) => (
                 <Reel key={i} ref={r} index={i} initial={initial[i]} reduce={reduce} onStop={sfx.stop.bind(sfx)} />
               ))}
+              <span className="sm-glass" aria-hidden="true" />
+              <i className="sm-payline l" aria-hidden="true" />
+              <i className="sm-payline r" aria-hidden="true" />
             </div>
 
             <div className="sm-deck">
-              <div className="sm-label" aria-hidden="true">{jackpot ? 'JACKPOT!' : '1 OF 1'}</div>
-              <button className={`sm-knob${pressed ? ' is-pressed' : ''}`} onClick={onKnob} aria-label="Spin the reels">
-                <span />
+              <span className="sm-slot" aria-hidden="true"><i /></span>
+              <button className={`sm-spin${pressed ? ' is-pressed' : ''}`} onClick={trigger} aria-label="Spin the reels">
+                <span>Spin</span>
               </button>
-            </div>
-
-            <div className="sm-tray">
-              <Link to="/contact" className={`sm-cta${jackpot ? ' is-out' : ''}`} tabIndex={jackpot ? 0 : -1}>
-                Let’s work together <b>→</b>
-              </Link>
+              <span className="sm-slot" aria-hidden="true"><i /></span>
             </div>
           </div>
 
-          <i className="sm-floor" />
+          <i className="sm-foot l" aria-hidden="true" />
+          <i className="sm-foot r" aria-hidden="true" />
+          <i className="sm-floor" aria-hidden="true" />
+          <Link to="/contact" className={`sm-cta${jackpot ? ' is-out' : ''}`} tabIndex={jackpot ? 0 : -1}>
+            Let’s work together <b>→</b>
+          </Link>
           <Confetti burst={burst} />
         </div>
+        <span className="sm-twinkle t1" aria-hidden="true">✦</span>
+        <span className="sm-twinkle t2" aria-hidden="true">✦</span>
+        <span className="sm-twinkle t3" aria-hidden="true">✦</span>
       </div>
 
       <button className="sm-scroll" onClick={scrollDown} aria-label="Scroll to read more">

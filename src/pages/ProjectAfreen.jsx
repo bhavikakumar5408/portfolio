@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
 import ProjectHeader from '../components/ProjectHeader.jsx'
 import ScrollProgress from '../components/fx/ScrollProgress.jsx'
 import MagazineFlipbook from '../components/MagazineFlipbook.jsx'
@@ -50,15 +51,28 @@ const spreads = [
 ]
 
 export default function ProjectAfreen() {
+  const { state } = useLocation()
   const pages = useMemo(() => Array.from({ length: TOTAL }, (_, i) => src(i + 1)), [])
   return (
     <div className="afr">
       <ScrollProgress />
       <div className="afr-inner">
         <ProjectHeader title="AFREEN Fashion Magazine" slug={SLUG} year="2023" />
+      </div>
 
-        <header className="afr-hero">
-          <img className="afr-cover" src={src(1)} alt="AFREEN magazine cover, December 2023" />
+      <section className="afr-wide afr-issue afr-first" id="issue">
+        <div className="afr-inner">
+          <p className="afr-kicker">The issue</p>
+          <h2 className="afr-h">Flip through AFREEN</h2>
+          <p className="afr-copy afr-narrow">The whole magazine, all 64 pages. Drag or swipe the corner of a page, or tap the arrows. Turn the page-turn sound on if you like.</p>
+        </div>
+        <div className="afr-book">
+          <MagazineFlipbook pages={pages} label="AFREEN magazine" autoOpen={!!state?.fromShelf} />
+        </div>
+      </section>
+
+      <div className="afr-inner">
+        <header className="afr-hero afr-hero-flat">
           <div className="afr-hero-text">
             <p className="afr-dek">A 64-page fashion magazine on Indian crafts and handloom: concept, shoots, writing and layout.</p>
             <dl className="afr-meta">
@@ -67,7 +81,7 @@ export default function ProjectAfreen() {
               <div><dt>Role</dt><dd>Concept, styling, art direction, layout, writing</dd></div>
               <div><dt>Tools</dt><dd>InDesign, Photoshop, Illustrator</dd></div>
             </dl>
-            <a href="#issue" className="afr-cta">Flip through the issue ↓</a>
+            
           </div>
         </header>
 
@@ -133,20 +147,10 @@ export default function ProjectAfreen() {
         </div>
       </section>
 
-      <section className="afr-sec afr-wide afr-issue" id="issue">
-        <div className="afr-inner">
-          <p className="afr-kicker">06 · Read the issue</p>
-          <h2 className="afr-h">Flip through AFREEN</h2>
-          <p className="afr-copy afr-narrow">The whole magazine, all 64 pages. Drag or swipe the corner of a page, or tap the arrows. Turn the page-turn sound on if you like.</p>
-        </div>
-        <div className="afr-book">
-          <MagazineFlipbook pages={pages} label="AFREEN magazine" />
-        </div>
-      </section>
 
       <div className="afr-inner">
         <section className="afr-sec">
-          <p className="afr-kicker">07 · Layout & typography</p>
+          <p className="afr-kicker">06 · Layout & typography</p>
           <h2 className="afr-h">Pacing the pages</h2>
           <div className="afr-copy afr-narrow">
             <p>High-contrast serif display type for headlines and bylines, quieter serif text in narrow columns for reading, and full-bleed photography to open each story. Text-heavy pages sit next to image pages so the issue keeps its rhythm.</p>
@@ -165,7 +169,7 @@ export default function ProjectAfreen() {
         </section>
 
         <section className="afr-sec afr-last">
-          <p className="afr-kicker">08 · Outcome</p>
+          <p className="afr-kicker">07 · Outcome</p>
           <div className="afr-two">
             <h2 className="afr-h">A finished issue, and where it started.</h2>
             <div className="afr-copy">

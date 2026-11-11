@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+  <rect width="800" height="1000" fill="#15110f" />
+  <rect x="40" y="40" width="720" height="920" fill="none" stroke="#5a4636" stroke-width="2" stroke-dasharray="10 10" />
+  <text x="400" y="470" text-anchor="middle" font-family="Georgia, serif" font-size="40" fill="#e3b45a">AI Catalogue</text>
+  <text x="400" y="520" text-anchor="middle" font-family="Georgia, serif" font-size="40" fill="#e3b45a">Studio</text>
+  <text x="400" y="580" text-anchor="middle" font-family="monospace" font-size="16" letter-spacing="3" fill="#8a6a4e">IMAGES PENDING</text>
+</svg>

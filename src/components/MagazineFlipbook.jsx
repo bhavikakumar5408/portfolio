@@ -6,7 +6,7 @@ const BREAK = 680 // below this container width show one page at a time
 
 // Realistic page-curl flipbook of the whole magazine (StPageFlip).
 // Flip sound is opt-in via a local toggle (off by default).
-export default function MagazineFlipbook({ pages, label = 'Magazine', pageW = 800, pageH = 1036 }) {
+export default function MagazineFlipbook({ pages, label = 'Magazine', pageW = 800, pageH = 1036, autoOpen = false }) {
   const PAGE_W = pageW
   const PAGE_H = pageH
   const wrapRef = useRef(null)
@@ -98,14 +98,17 @@ export default function MagazineFlipbook({ pages, label = 'Magazine', pageW = 80
     pf.on('flip', (e) => { setPage(e.data); setTurned(true) })
     pf.on('changeState', (e) => { if (e.data === 'flipping' && sound.current) pageFlipSound() })
     book.current = pf
+    // arriving from the bookshelf: open the cover for the visitor
+    const opener = autoOpen ? setTimeout(() => { try { pf.flipNext('bottom') } catch { /* gone */ } }, 1400) : 0
     return () => {
       seen.disconnect()
+      clearTimeout(opener)
       timers.forEach(clearTimeout)
       try { pf.destroy() } catch { /* already gone */ }
       wrap.remove()
       book.current = null
     }
-  }, [active, pages, PAGE_W, PAGE_H])
+  }, [active, pages, PAGE_W, PAGE_H, autoOpen])
 
   const next = useCallback(() => book.current?.flipNext('bottom'), [])
   const prev = useCallback(() => book.current?.flipPrev('bottom'), [])

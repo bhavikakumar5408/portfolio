@@ -127,7 +127,7 @@ export default function ProjectIara() {
           </div>
 
           <div className="iara-next">
-            <Link to="/work/a-bar-that-argues-back" className="t-lg nav-link">A Bar That Argues Back. ›</Link>
+            <Link to="/work/afreen-fashion-magazine" className="t-lg nav-link">AFREEN Fashion Magazine ›</Link>
           </div>
         </div>
       </div>
