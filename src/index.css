@@ -85,7 +85,7 @@ button {
 }
 
 .nav {
-  background: var(--bg);
+  background: transparent;
   padding: 12px 20px;
   height: 56px;
   display: flex;
@@ -98,8 +98,9 @@ button {
   max-width: 800px;
   height: 32px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 40px;
 }
 
 .nav-group {

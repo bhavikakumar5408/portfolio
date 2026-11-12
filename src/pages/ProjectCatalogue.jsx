@@ -124,7 +124,7 @@ export default function ProjectCatalogue() {
       {/* 01 — HERO */}
       <header className="aic-hero">
         <Link to="/work" className="aic-back">← All projects</Link>
-        <p className="aic-eyebrow">POP Shop · AI Design Curator · 2025</p>
+        <p className="aic-eyebrow">POP Shop · AI Design Curator · 2026</p>
         <h1 className="aic-title">AI Catalogue Studio</h1>
         <p className="aic-sub">Scaling product imagery for a live commerce catalogue</p>
         <div className="aic-metric" data-r><b>100K+</b><span>product images processed with AI</span></div>

@@ -33,8 +33,6 @@ export default function Nav({ theme, onToggleTheme }) {
       <nav className="nav">
         <div className="nav-inner">
           <div className="nav-group">
-            <Link to="/" className={`logo${isHome ? ' home' : ''}`}>BK</Link>
-            <span className="sep">|</span>
             <div className="nav-links">
               <NavLink to="/about" className={cls}>About</NavLink>
               <NavLink to="/work" end className={cls}>Work</NavLink>

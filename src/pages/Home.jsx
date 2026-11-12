@@ -1,5 +1,5 @@
-import Shelf from '../components/Shelf.jsx'
+import ShelfJourney from '../components/ShelfJourney.jsx'
 
 export default function Home() {
-  return <Shelf />
+  return <ShelfJourney />
 }

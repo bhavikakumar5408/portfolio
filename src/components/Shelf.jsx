@@ -136,7 +136,7 @@ function Plant() {
   )
 }
 
-export default function Shelf() {
+export default function Shelf({ svgRef, liftedId = null, liftY = 0 }) {
   const navigate = useNavigate()
   const [tip, setTip] = useState(null) // { x, y, title, sub }
   const busy = useRef(false)
@@ -200,7 +200,7 @@ export default function Shelf() {
   }
 
   const camera = {
-    id: 'camera', go: 'ai-catalogue-studio', title: 'AI Catalogue Studio', sub: 'POP Shop · 2025', spine: '#1e1e1e', cover: '/catalogue/pop-logo-card.webp', ratio: 1,
+    id: 'camera', go: 'ai-catalogue-studio', title: 'AI Catalogue Studio', sub: 'POP Shop · 2026', spine: '#1e1e1e', cover: '/catalogue/pop-logo-card.webp', ratio: 1,
   }
 
   const hit = (item) => ({
@@ -223,7 +223,7 @@ export default function Shelf() {
       </header>
 
       <div className="shelf-wrap">
-        <svg viewBox={compact ? '120 60 760 480' : '0 0 1000 560'} className="shelf-svg" role="group" aria-label="A bookshelf of projects">
+        <svg ref={svgRef} viewBox={compact ? '120 60 760 480' : '0 0 1000 560'} className="shelf-svg" role="group" aria-label="A bookshelf of projects">
           <defs>
             <filter id="sh-warm" x="-10%" y="-10%" width="130%" height="140%">
               <feColorMatrix type="matrix" values="0 0 0 0 0.24  0 0 0 0 0.13  0 0 0 0 0.06  0 0 0 1 0" />
@@ -257,12 +257,13 @@ export default function Shelf() {
               const item = b.go ? { ...b, spine: b.c } : null
               if (!item) return <Spine key={b.id} b={b} />
               const delay = b.id === 'afreen' ? '0s' : '1.6s'
+              const lifted = liftedId === b.id
               return (
                 <g
                   key={b.id}
                   ref={(n) => { refs.current[b.id] = n }}
-                  className="sh-book"
-                  style={{ '--dl': delay }}
+                  className={`sh-book${lifted ? ' sh-book--lifted' : ''}`}
+                  style={{ '--dl': delay, ...(lifted ? { transform: `translateY(-${liftY}px)` } : {}) }}
                   {...hit(item)}
                 >
                   <rect x={b.x - 6} y={BASE1 - b.h - 10} width={b.w + 12} height={b.h + 10} fill="transparent" />
@@ -278,8 +279,8 @@ export default function Shelf() {
             <g transform={`rotate(${FRAME.rot} ${FRAME.x} ${BASE2})`}>
             <g
               ref={(n) => { refs.current[frame.id] = n }}
-              className="sh-book sh-frame"
-              style={{ '--dl': '0.8s' }}
+              className={`sh-book sh-frame${liftedId === 'iara' ? ' sh-book--lifted' : ''}`}
+              style={{ '--dl': '0.8s', ...(liftedId === 'iara' ? { transform: `translateY(-${liftY}px)` } : {}) }}
               {...hit(frame)}
             >
               <rect x={FRAME.x} y={BASE2 - FRAME.h} width={FRAME.w} height={FRAME.h} rx="6" fill="#8a5a34" {...OL} strokeWidth="2.6" />
@@ -295,8 +296,8 @@ export default function Shelf() {
             <ellipse className="sh-contact" cx="530" cy="502" rx="72" ry="7" />
             <g
               ref={(n) => { refs.current[camera.id] = n }}
-              className="sh-book"
-              style={{ '--dl': '1.2s' }}
+              className={`sh-book${liftedId === 'camera' ? ' sh-book--lifted' : ''}`}
+              style={{ '--dl': '1.2s', ...(liftedId === 'camera' ? { transform: `translateY(-${liftY}px)` } : {}) }}
               {...hit(camera)}
             >
               <rect x="450" y="380" width="160" height="120" fill="transparent" />
