@@ -70,6 +70,7 @@ function Silhouette() {
       <circle cx="556" cy="250" r="26" />
       <path d="M726 258 C768 268 782 240 754 232" />
       <rect x={FRAME.x} y={BASE2 - FRAME.h} width={FRAME.w} height={FRAME.h} rx="6" transform={`rotate(${FRAME.rot} ${FRAME.x} ${BASE2})`} />
+      <rect x="460" y="386" width="140" height="114" rx="4" />
       <path d="M668 460 H732 L724 500 H676 Z" />
       <circle cx="700" cy="414" r="34" />
     </g>
@@ -198,6 +199,10 @@ export default function Shelf() {
     id: 'iara', go: 'my-coworker-isn-t-real', title: 'Iara', sub: 'An AI coworker', spine: '#8a5a34', cover: '/img/iara.jpg', ratio: 1442 / 1178,
   }
 
+  const camera = {
+    id: 'camera', go: 'ai-catalogue-studio', title: 'AI Catalogue Studio', sub: 'POP Shop · 2025', spine: '#1e1e1e', cover: '/catalogue/pop-logo-card.webp', ratio: 1,
+  }
+
   const hit = (item) => ({
     onPointerMove: (e) => move(e, { title: item.title, sub: item.sub }),
     onPointerLeave: leave,
@@ -211,21 +216,8 @@ export default function Shelf() {
   return (
     <section className="shelf-home">
       <i className="shelf-ambient" aria-hidden="true" />
-      <div className="shelf-window" aria-hidden="true">
-        <div className="shelf-win-frame">
-          <div className="shelf-glass">
-            <i className="shelf-glow shelf-sun-g" />
-            <i className="shelf-glow shelf-moon-g" />
-            <i className="shelf-moon" />
-            <div className="shelf-stars">{Array.from({ length: 7 }, (_, i) => <i key={i} style={{ '--x': `${12 + (i * 29) % 78}%`, '--y': `${10 + (i * 19) % 72}%`, '--d': `${(i % 4) * 0.6}s` }} />)}</div>
-          </div>
-          <i className="shelf-mullion-v" />
-          <i className="shelf-mullion-h" />
-        </div>
-        <i className="shelf-win-sill" />
-      </div>
 
-      <header className="shelf-head">
+<header className="shelf-head">
         <h1>Bhavika Kumar</h1>
         <p>AI generalist and design curator</p>
       </header>
@@ -299,12 +291,24 @@ export default function Shelf() {
               <circle cx={FRAME.x + FRAME.w - 11} cy={BASE2 - 11} r="3" fill="#e9d9b8" {...OL} strokeWidth="1.2" />
             </g>
             </g>
+            {/* camera between frame and plant */}
+            <ellipse className="sh-contact" cx="530" cy="502" rx="72" ry="7" />
+            <g
+              ref={(n) => { refs.current[camera.id] = n }}
+              className="sh-book"
+              style={{ '--dl': '1.2s' }}
+              {...hit(camera)}
+            >
+              <rect x="450" y="380" width="160" height="120" fill="transparent" />
+              <image href="/img/camera.png" x="460" y="386" width="140" height="114" />
+            </g>
+
             <Plant />
           </g>
         </svg>
       </div>
 
-      <p className="shelf-touch">Tap a book or the photo to open a project</p>
+      <p className="shelf-touch">Tap a book, the photo or the camera to open a project</p>
 
       {tip && (
         <div className="shelf-tip" style={{ left: tip.x, top: tip.y }}>
