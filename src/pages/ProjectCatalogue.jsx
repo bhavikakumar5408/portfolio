@@ -204,10 +204,6 @@ export default function ProjectCatalogue() {
         <p className="aic-k" data-r>In the wild</p>
         <h2 data-r>This wasn't a concept project.</h2>
         <p data-r>This work shipped — it supported product imagery for POP Shop's live catalogue, not a personal AI experiment. Real product diversity, real catalogue requirements, production-scale AI usage.</p>
-        <div className="aic-browser" data-r>
-          <div className="aic-bar"><i /><i /><i /><span>popshop.app</span></div>
-          <div className="aic-browser-shot"><Ph label="POP SHOP — LIVE CATALOGUE SCREENSHOT" ratio="16 / 10" /></div>
-        </div>
       </section>
 
       {/* 11 — LEARNINGS */}

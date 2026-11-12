@@ -11,7 +11,7 @@ import SoundToggle from './components/fx/SoundToggle.jsx'
 import { hoverTick } from './lib/sound.js'
 
 export default function App() {
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme-v2') || 'dark')
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme-v2') || 'light')
   const { pathname } = useLocation()
 
   useEffect(() => {
